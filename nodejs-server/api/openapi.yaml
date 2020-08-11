@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: Schulung-API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Richie238/schulung-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: /
+paths:
+  /schulungen/:
+    get:
+      operationId: schulungenGET
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schulung'
+                x-content-type: application/json
+      x-swagger-router-controller: Default
+    post:
+      operationId: schulungenPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schulung'
+      responses:
+        "201":
+          description: Created
+      x-swagger-router-controller: Default
+  /schulungen/{sid}:
+    get:
+      operationId: schulungenSidGET
+      parameters:
+      - name: sid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schulung'
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    Schulung:
+      required:
+      - datum
+      - id
+      - name
+      - trainer
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 234
+        name:
+          type: string
+          example: REST & API Sicherheit
+        datum:
+          type: string
+          format: date
+          example: 2020-08-10
+        trainer:
+          $ref: '#/components/schemas/Schulung_trainer'
+      example:
+        datum: 2020-08-10T00:00:00.000+0000
+        trainer:
+          name: Ricardo Simo
+          uri: https://richie238.github.io/REST-APISicherheit/
+        name: REST & API Sicherheit
+        id: 234
+    Schulung_trainer:
+      required:
+      - name
+      - uri
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ricardo Simo
+        uri:
+          type: string
+          format: uri
+          example: https://richie238.github.io/REST-APISicherheit/
+      example:
+        name: Ricardo Simo
+        uri: https://richie238.github.io/REST-APISicherheit/
